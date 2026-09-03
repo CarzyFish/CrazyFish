@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Crazy Fish — Pescados & Mariscos Premium para tu Restaurante</title>
+  <meta name="description" content="Distribuidora premium de pescados y mariscos para el canal HORECA en Santiago. Filetes 100% limpios sin merma, entrega AM programada y cadena de frío activa. Precios de convenio B2B." />
+  <meta name="theme-color" content="#070e17" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Crazy Fish — Pescados & Mariscos Premium" />
+  <meta property="og:description" content="Suministro directo para restaurantes, hoteles y canal gastronómico en Santiago. Rendimiento real, entrega AM y cadena de frío garantizada." />
+  <meta property="og:locale" content="es_CL" />
+
+  <!-- Tailwind CSS (Play CDN) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            navy: {
+              950: '#070e17',
+              900: '#0b1624',
+              850: '#0e1b2b',
+              800: '#122236',
+              700: '#1b3149',
+            },
+            aqua:    '#38bdf8', // cyan accent
+            esmeralda:'#34d399', // convenio B2B green
+            plata:   '#cbd5e1',
+          },
+          fontFamily: {
+            sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+            display: ['Sora', 'Inter', 'ui-sans-serif', 'sans-serif'],
+          },
+          boxShadow: {
+            'glow-aqua': '0 0 0 1px rgba(56,189,248,0.35), 0 20px 45px -20px rgba(56,189,248,0.55)',
+            'glow-esm':  '0 0 0 1px rgba(52,211,153,0.35), 0 20px 45px -20px rgba(52,211,153,0.45)',
+          },
+          keyframes: {
+            floaty: { '0%,100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-12px)' } },
+            shimmer: { '0%': { backgroundPosition: '-200% 0' }, '100%': { backgroundPosition: '200% 0' } },
+          },
+          animation: {
+            floaty: 'floaty 6s ease-in-out infinite',
+            shimmer: 'shimmer 3s linear infinite',
+          },
+        },
+      },
+    };
+  </script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    :root { color-scheme: dark; }
+    html, body { background-color: #070e17; }
+    body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+
+    /* Gradient text */
+    .text-gradient {
+      background: linear-gradient(100deg, #e2e8f0 0%, #38bdf8 55%, #34d399 100%);
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent; color: transparent;
+    }
+
+    /* Hero glowing orbs */
+    .orb { position: absolute; border-radius: 9999px; filter: blur(90px); opacity: .55; pointer-events: none; }
+
+    /* Fine grid overlay */
+    .grid-overlay {
+      background-image:
+        linear-gradient(to right, rgba(148,163,184,.06) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(148,163,184,.06) 1px, transparent 1px);
+      background-size: 48px 48px;
+      -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 40%, transparent 100%);
+      mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 40%, transparent 100%);
+    }
+
+    /* Product card hover */
+    .product-card { transition: transform .35s cubic-bezier(.2,.7,.2,1), box-shadow .35s ease, border-color .35s ease; }
+    .product-card:hover { transform: translateY(-8px); border-color: rgba(56,189,248,.45); box-shadow: 0 30px 60px -30px rgba(56,189,248,.35); }
+    .product-card:hover .card-img { transform: scale(1.08); }
+    .card-img { transition: transform .6s cubic-bezier(.2,.7,.2,1); }
+
+    /* Shimmer badge */
+    .badge-shimmer {
+      background-image: linear-gradient(110deg, rgba(52,211,153,.15) 0%, rgba(52,211,153,.45) 45%, rgba(52,211,153,.15) 60%);
+      background-size: 200% 100%;
+    }
+
+    /* Tabs */
+    .tab-btn { transition: all .3s ease; }
+    .tab-btn.active { background: linear-gradient(100deg,#38bdf8,#34d399); color: #05121f; box-shadow: 0 12px 30px -12px rgba(56,189,248,.6); }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar { width: 10px; height: 10px; }
+    ::-webkit-scrollbar-track { background: #0b1624; }
+    ::-webkit-scrollbar-thumb { background: #1b3149; border-radius: 8px; }
+    ::-webkit-scrollbar-thumb:hover { background: #2a4d6e; }
+
+    /* Cart drawer */
+    #cartDrawer { transition: transform .4s cubic-bezier(.2,.7,.2,1); }
+    #cartOverlay { transition: opacity .35s ease; }
+
+    /* Reveal fallback (in case GSAP fails to load, content stays visible) */
+    .reveal { opacity: 1; }
+
+    /* Qty stepper */
+    .stepper-btn { transition: background .2s ease, color .2s ease; }
+    .stepper-btn:hover { background: rgba(56,189,248,.15); color: #38bdf8; }
+
+    /* Floating WhatsApp pulse */
+    .wa-pulse::before {
+      content:''; position:absolute; inset:0; border-radius:9999px;
+      background: rgba(37,211,102,.55); z-index:-1;
+      animation: waPulse 2.4s ease-out infinite;
+    }
+    @keyframes waPulse { 0%{transform:scale(1);opacity:.6} 100%{transform:scale(1.9);opacity:0} }
+
+    [data-lucide] { width: 1em; height: 1em; }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
+    }
+  </style>
+</head>
+
+<body class="bg-navy-950 text-slate-200 antialiased selection:bg-aqua/30 selection:text-white">
+
+  <!-- ============ NAVBAR ============ -->
+  <header id="navbar" class="fixed top-0 inset-x-0 z-50 transition-all duration-300">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <nav class="mt-3 flex items-center justify-between rounded-2xl border border-white/5 bg-navy-900/70 px-4 py-3 backdrop-blur-xl shadow-lg shadow-black/40">
+        <!-- Logo -->
+        <a href="#hero" class="flex items-center gap-2.5 group">
+          <span class="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-aqua to-esmeralda text-navy-950 shadow-glow-aqua">
+            <i data-lucide="fish" class="text-xl"></i>
+          </span>
+          <span class="leading-tight">
+            <span class="block font-display text-lg font-extrabold tracking-tight text-white">CRAZY FISH</span>
+            <span class="block text-[11px] font-medium tracking-[0.2em] text-aqua/80">PREMIUM HORECA</span>
+          </span>
+        </a>
+
+        <!-- Desktop links -->
+        <div class="hidden items-center gap-8 md:flex">
+          <a href="#ventajas" class="text-sm font-medium text-slate-300 transition hover:text-aqua">Ventajas</a>
+          <a href="#catalogo" class="text-sm font-medium text-slate-300 transition hover:text-aqua">Carta & Tarifas</a>
+          <a href="#politica" class="text-sm font-medium text-slate-300 transition hover:text-aqua">Política B2B</a>
+          <a href="#contacto" class="text-sm font-medium text-slate-300 transition hover:text-aqua">Contacto</a>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <button data-open-cart class="relative hidden items-center gap-2 rounded-xl border border-aqua/30 bg-aqua/10 px-3.5 py-2 text-sm font-semibold text-aqua transition hover:bg-aqua/20 sm:flex">
+            <i data-lucide="clipboard-list"></i>
+            <span>Cotización</span>
+            <span data-cart-count class="grid h-5 min-w-5 place-items-center rounded-full bg-esmeralda px-1 text-xs font-bold text-navy-950">0</span>
+          </button>
+          <a href="#cta-whatsapp" class="hidden items-center gap-2 rounded-xl bg-gradient-to-r from-aqua to-esmeralda px-4 py-2 text-sm font-bold text-navy-950 shadow-glow-aqua transition hover:brightness-110 lg:flex">
+            <i data-lucide="message-circle"></i> WhatsApp
+          </a>
+          <!-- Mobile menu toggle -->
+          <button id="menuToggle" class="grid h-10 w-10 place-items-center rounded-xl border border-white/10 text-slate-200 md:hidden" aria-label="Menú">
+            <i data-lucide="menu"></i>
+          </button>
+        </div>
+      </nav>
+
+      <!-- Mobile menu -->
+      <div id="mobileMenu" class="mt-2 hidden overflow-hidden rounded-2xl border border-white/5 bg-navy-900/95 backdrop-blur-xl md:hidden">
+        <div class="flex flex-col p-2">
+          <a href="#ventajas" class="mobile-link rounded-xl px-4 py-3 text-sm font-medium text-slate-200 hover:bg-white/5">Ventajas</a>
+          <a href="#catalogo" class="mobile-link rounded-xl px-4 py-3 text-sm font-medium text-slate-200 hover:bg-white/5">Carta & Tarifas</a>
+          <a href="#politica" class="mobile-link rounded-xl px-4 py-3 text-sm font-medium text-slate-200 hover:bg-white/5">Política B2B</a>
+          <a href="#contacto" class="mobile-link rounded-xl px-4 py-3 text-sm font-medium text-slate-200 hover:bg-white/5">Contacto</a>
+          <button data-open-cart class="mobile-link flex items-center justify-between rounded-xl px-4 py-3 text-sm font-semibold text-aqua hover:bg-white/5">
+            <span>Ver mi cotización</span>
+            <span data-cart-count class="grid h-5 min-w-5 place-items-center rounded-full bg-esmeralda px-1 text-xs font-bold text-navy-950">0</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============ HERO ============ -->
+  <section id="hero" class="relative overflow-hidden pt-32 pb-20 sm:pt-40 sm:pb-28">
+    <!-- Background -->
+    <div class="orb -left-24 top-10 h-72 w-72 bg-aqua/40 animate-floaty"></div>
+    <div class="orb right-0 top-40 h-80 w-80 bg-esmeralda/30 animate-floaty" style="animation-delay:-3s"></div>
+    <div class="absolute inset-0 grid-overlay"></div>
+
+    <div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="grid items-center gap-12 lg:grid-cols-2">
+        <!-- Copy -->
+        <div>
+          <div data-hero class="mb-6 inline-flex items-center gap-2 rounded-full border border-aqua/25 bg-aqua/10 px-4 py-1.5 text-xs font-semibold tracking-wide text-aqua">
+            <span class="relative flex h-2 w-2">
+              <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-esmeralda opacity-75"></span>
+              <span class="relative inline-flex h-2 w-2 rounded-full bg-esmeralda"></span>
+            </span>
+            Distribuidora Premium · Santiago de Chile
+          </div>
+
+          <h1 data-hero class="font-display text-4xl font-extrabold leading-[1.05] tracking-tight text-white sm:text-5xl lg:text-6xl">
+            CRAZY FISH
+            <span class="mt-2 block text-gradient">Pescados & Mariscos Premium para tu Restaurante</span>
+          </h1>
+
+          <p data-hero class="mt-6 max-w-xl text-base leading-relaxed text-slate-300 sm:text-lg">
+            Suministro directo para el <span class="font-semibold text-white">canal HORECA</span>. Filetes
+            <span class="font-semibold text-aqua">100% limpios sin merma</span>, entrega programada AM y
+            <span class="font-semibold text-esmeralda">cadena de frío activa</span> para asegurar la
+            <span class="italic">mise en place</span> de tu cocina.
+          </p>
+
+          <div data-hero class="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+            <a href="#catalogo" class="group inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-aqua to-esmeralda px-6 py-3.5 text-base font-bold text-navy-950 shadow-glow-aqua transition hover:brightness-110">
+              <i data-lucide="scroll-text"></i> Ver Carta & Tarifas
+              <i data-lucide="arrow-right" class="transition group-hover:translate-x-1"></i>
+            </a>
+            <a id="cta-whatsapp" href="#" data-wa-generic class="inline-flex items-center justify-center gap-2 rounded-xl border border-white/15 bg-white/5 px-6 py-3.5 text-base font-semibold text-white backdrop-blur transition hover:border-esmeralda/50 hover:bg-esmeralda/10">
+              <i data-lucide="message-circle" class="text-esmeralda"></i> Cotizar por WhatsApp
+            </a>
+          </div>
+
+          <div data-hero class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-slate-400">
+            <a href="https://instagram.com/crazyfish.cl" target="_blank" rel="noopener" class="inline-flex items-center gap-2 font-medium text-slate-300 transition hover:text-aqua">
+              <i data-lucide="instagram"></i> @crazyfish.cl
+            </a>
+            <span class="hidden h-4 w-px bg-white/10 sm:block"></span>
+            <span class="inline-flex items-center gap-2"><i data-lucide="snowflake" class="text-aqua"></i> Cadena de frío garantizada</span>
+            <span class="inline-flex items-center gap-2"><i data-lucide="badge-check" class="text-esmeralda"></i> Calidad HORECA certificada</span>
+          </div>
+        </div>
+
+        <!-- Visual card -->
+        <div data-hero class="relative">
+          <div class="relative mx-auto max-w-md rounded-3xl border border-white/10 bg-gradient-to-br from-navy-800/80 to-navy-900/80 p-6 shadow-2xl shadow-black/50 backdrop-blur">
+            <div class="flex items-center justify-between">
+              <span class="inline-flex items-center gap-2 rounded-full bg-esmeralda/15 px-3 py-1 text-xs font-bold text-esmeralda">
+                <i data-lucide="trending-down"></i> Precio Convenio B2B
+              </span>
+              <span class="text-xs font-medium text-slate-400">Actualizado hoy</span>
+            </div>
+
+            <div class="mt-5 space-y-3">
+              <div class="flex items-center justify-between rounded-2xl border border-white/5 bg-navy-950/60 p-4">
+                <div class="flex items-center gap-3">
+                  <span class="grid h-11 w-11 place-items-center rounded-xl bg-aqua/15 text-aqua"><i data-lucide="fish"></i></span>
+                  <div>
+                    <p class="text-sm font-semibold text-white">Salmón Salar Premium</p>
+                    <p class="text-xs text-slate-400">Sashimi · Tártaro · Plancha</p>
+                  </div>
+                </div>
+                <div class="text-right">
+                  <p class="text-xs text-slate-500 line-through">$15.500</p>
+                  <p class="font-display text-lg font-bold text-esmeralda">$13.500<span class="text-xs font-normal text-slate-400">/kg</span></p>
+                </div>
+              </div>
+
+              <div class="flex items-center justify-between rounded-2xl border border-white/5 bg-navy-950/60 p-4">
+                <div class="flex items-center gap-3">
+                  <span class="grid h-11 w-11 place-items-center rounded-xl bg-esmeralda/15 text-esmeralda"><i data-lucide="shell"></i></span>
+                  <div>
+                    <p class="text-sm font-semibold text-white">Reineta Filete Extra</p>
+                    <p class="text-xs text-slate-400">100% pulpa · Cero merma</p>
+                  </div>
+                </div>
+                <div class="text-right">
+                  <p class="text-xs text-slate-500 line-through">$13.000</p>
+                  <p class="font-display text-lg font-bold text-esmeralda">$10.000<span class="text-xs font-normal text-slate-400">/kg</span></p>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-5 flex items-center gap-3 rounded-2xl bg-gradient-to-r from-aqua/10 to-esmeralda/10 p-4">
+              <i data-lucide="truck" class="text-aqua"></i>
+              <p class="text-xs text-slate-300"><span class="font-semibold text-white">Entrega AM programada</span> — todo listo antes del servicio de almuerzo.</p>
+            </div>
+          </div>
+
+          <!-- floating badges -->
+          <div class="absolute -left-4 top-6 hidden animate-floaty rounded-2xl border border-white/10 bg-navy-900/90 px-4 py-3 shadow-xl backdrop-blur sm:block" style="animation-delay:-2s">
+            <p class="text-xs text-slate-400">Rendimiento</p>
+            <p class="font-display text-xl font-bold text-white">100% <span class="text-aqua">útil</span></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Trust strip -->
+      <div data-hero class="mt-16 grid grid-cols-2 gap-4 border-t border-white/5 pt-8 sm:grid-cols-4">
+        <div><p class="font-display text-2xl font-bold text-white">AM</p><p class="text-sm text-slate-400">Entrega programada</p></div>
+        <div><p class="font-display text-2xl font-bold text-white">0%</p><p class="text-sm text-slate-400">Merma en filetes</p></div>
+        <div><p class="font-display text-2xl font-bold text-white">+15kg</p><p class="text-sm text-slate-400">Convenio por volumen</p></div>
+        <div><p class="font-display text-2xl font-bold text-white">24/7</p><p class="text-sm text-slate-400">Cadena de frío</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ VENTAJAS (4 pilares) ============ -->
+  <section id="ventajas" class="relative py-20 sm:py-24">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="mx-auto max-w-2xl text-center" data-reveal>
+        <p class="text-sm font-semibold uppercase tracking-[0.2em] text-aqua">Por qué Crazy Fish</p>
+        <h2 class="mt-3 font-display text-3xl font-extrabold tracking-tight text-white sm:text-4xl">Cuatro pilares que ordenan tu cocina</h2>
+        <p class="mt-4 text-slate-400">Pensado para chefs y administradores que necesitan costos predecibles y producto listo para servicio.</p>
+      </div>
+
+      <div class="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <!-- Pilar 1 -->
+        <article data-reveal class="group relative overflow-hidden rounded-2xl border border-white/8 bg-navy-900/60 p-6 transition hover:border-aqua/40 hover:bg-navy-850">
+          <div class="mb-5 inline-grid h-12 w-12 place-items-center rounded-xl bg-aqua/15 text-aqua transition group-hover:scale-110"><i data-lucide="scale" class="text-2xl"></i></div>
+          <h3 class="font-display text-lg font-bold text-white">100% Rendimiento Real</h3>
+          <p class="mt-2 text-sm leading-relaxed text-slate-400">Pagas solo carne útil. Cero merma en espinas, cabezas o vísceras.</p>
+          <span class="absolute -right-6 -top-6 h-20 w-20 rounded-full bg-aqua/10 blur-2xl transition group-hover:bg-aqua/20"></span>
+        </article>
+        <!-- Pilar 2 -->
+        <article data-reveal class="group relative overflow-hidden rounded-2xl border border-white/8 bg-navy-900/60 p-6 transition hover:border-aqua/40 hover:bg-navy-850">
+          <div class="mb-5 inline-grid h-12 w-12 place-items-center rounded-xl bg-esmeralda/15 text-esmeralda transition group-hover:scale-110"><i data-lucide="alarm-clock" class="text-2xl"></i></div>
+          <h3 class="font-display text-lg font-bold text-white">Entrega AM Programada</h3>
+          <p class="mt-2 text-sm leading-relaxed text-slate-400">Despacho temprano para tener todo listo antes del servicio de almuerzo.</p>
+          <span class="absolute -right-6 -top-6 h-20 w-20 rounded-full bg-esmeralda/10 blur-2xl transition group-hover:bg-esmeralda/20"></span>
+        </article>
+        <!-- Pilar 3 -->
+        <article data-reveal class="group relative overflow-hidden rounded-2xl border border-white/8 bg-navy-900/60 p-6 transition hover:border-aqua/40 hover:bg-navy-850">
+          <div class="mb-5 inline-grid h-12 w-12 place-items-center rounded-xl bg-aqua/15 text-aqua transition group-hover:scale-110"><i data-lucide="calculator" class="text-2xl"></i></div>
+          <h3 class="font-display text-lg font-bold text-white">Costeo Confiable</h3>
+          <p class="mt-2 text-sm leading-relaxed text-slate-400">Estabilidad en escandallos y precios preferenciales por volumen.</p>
+          <span class="absolute -right-6 -top-6 h-20 w-20 rounded-full bg-aqua/10 blur-2xl transition group-hover:bg-aqua/20"></span>
+        </article>
+        <!-- Pilar 4 -->
+        <article data-reveal class="group relative overflow-hidden rounded-2xl border border-white/8 bg-navy-900/60 p-6 transition hover:border-aqua/40 hover:bg-navy-850">
+          <div class="mb-5 inline-grid h-12 w-12 place-items-center rounded-xl bg-esmeralda/15 text-esmeralda transition group-hover:scale-110"><i data-lucide="snowflake" class="text-2xl"></i></div>
+          <h3 class="font-display text-lg font-bold text-white">Cadena de Frío Activa</h3>
+          <p class="mt-2 text-sm leading-relaxed text-slate-400">Transporte con control térmico garantizado hasta tu cámara.</p>
+          <span class="absolute -right-6 -top-6 h-20 w-20 rounded-full bg-esmeralda/10 blur-2xl transition group-hover:bg-esmeralda/20"></span>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CATÁLOGO ============ -->
+  <section id="catalogo" class="relative py-20 sm:py-24">
+    <div class="absolute inset-0 bg-gradient-to-b from-navy-900/50 to-transparent"></div>
+    <div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col items-start justify-between gap-6 lg:flex-row lg:items-end" data-reveal>
+        <div class="max-w-2xl">
+          <p class="text-sm font-semibold uppercase tracking-[0.2em] text-aqua">Carta & Tarifas</p>
+          <h2 class="mt-3 font-display text-3xl font-extrabold tracking-tight text-white sm:text-4xl">Catálogo para canal gastronómico</h2>
+          <p class="mt-4 text-slate-400">Precio suelto de referencia y <span class="font-semibold text-esmeralda">precio convenio B2B</span> por volumen. Selecciona cantidades y arma tu cotización.</p>
+        </div>
+        <!-- Tabs -->
+        <div class="flex flex-wrap gap-2 rounded-2xl border border-white/8 bg-navy-900/60 p-1.5" role="tablist">
+          <button class="tab-btn active rounded-xl px-4 py-2 text-sm font-semibold text-slate-300" data-filter="todos">Todos</button>
+          <button class="tab-btn rounded-xl px-4 py-2 text-sm font-semibold text-slate-300" data-filter="nobles">Pescados Nobles</button>
+          <button class="tab-btn rounded-xl px-4 py-2 text-sm font-semibold text-slate-300" data-filter="mariscos">Mariscos Frescos</button>
+        </div>
+      </div>
+
+      <!-- Product grid -->
+      <div id="productGrid" class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3"></div>
+
+      <p class="mt-6 text-xs text-slate-500">* Valores referenciales por kg/unidad/porción según formato. Precios sujetos a disponibilidad y estacionalidad. (*) Almejas y Choritos por malla cerrada — ver política comercial.</p>
+    </div>
+  </section>
+
+  <!-- ============ NOTA COMERCIAL (Callout) ============ -->
+  <section id="politica" class="py-12 sm:py-16">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div data-reveal class="relative overflow-hidden rounded-3xl border border-esmeralda/25 bg-gradient-to-br from-navy-850 to-navy-900 p-8 sm:p-12">
+        <div class="orb -right-10 -top-10 h-64 w-64 bg-esmeralda/25"></div>
+        <div class="relative grid gap-8 lg:grid-cols-[auto,1fr] lg:items-center">
+          <div class="grid h-16 w-16 place-items-center rounded-2xl bg-esmeralda/15 text-esmeralda shadow-glow-esm">
+            <i data-lucide="handshake" class="text-3xl"></i>
+          </div>
+          <div>
+            <span class="inline-flex items-center gap-2 rounded-full bg-esmeralda/15 px-3 py-1 text-xs font-bold uppercase tracking-wide text-esmeralda">
+              <i data-lucide="sparkles"></i> Política Comercial para Chefs y Administradores
+            </span>
+            <h3 class="mt-4 font-display text-2xl font-extrabold text-white sm:text-3xl">Tarifas por malla, totalmente estudiables</h3>
+            <p class="mt-3 max-w-3xl leading-relaxed text-slate-300">
+              Los valores de <span class="font-semibold text-white">Almejas ($2.000)</span> y
+              <span class="font-semibold text-white">Choritos ($1.500)</span> corresponden a
+              <span class="font-semibold text-esmeralda">malla cerrada</span>. Para volúmenes consolidados y
+              contratos de abastecimiento semanal frecuente, la tarifa final por malla es
+              <span class="font-semibold text-esmeralda">totalmente estudiable</span>.
+            </p>
+            <div class="mt-6 flex flex-col gap-3 sm:flex-row">
+              <a href="#" data-wa-generic class="inline-flex items-center justify-center gap-2 rounded-xl bg-esmeralda px-5 py-3 text-sm font-bold text-navy-950 transition hover:brightness-110">
+                <i data-lucide="message-circle"></i> Negociar contrato semanal
+              </a>
+              <a href="#catalogo" class="inline-flex items-center justify-center gap-2 rounded-xl border border-white/15 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/5">
+                <i data-lucide="list"></i> Volver al catálogo
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ COTIZADOR CTA ============ -->
+  <section class="py-12 sm:py-16">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div data-reveal class="grid gap-8 rounded-3xl border border-white/8 bg-navy-900/60 p-8 sm:p-10 lg:grid-cols-2 lg:items-center">
+        <div>
+          <p class="text-sm font-semibold uppercase tracking-[0.2em] text-aqua">Cotizador rápido</p>
+          <h3 class="mt-3 font-display text-3xl font-extrabold text-white">Arma tu pedido en segundos</h3>
+          <p class="mt-3 text-slate-400">Agrega productos desde el catálogo, ajusta cantidades y envía el detalle por WhatsApp con el nombre de tu restaurante. Nosotros confirmamos stock, precio final y horario de entrega AM.</p>
+          <ul class="mt-6 space-y-3 text-sm text-slate-300">
+            <li class="flex items-center gap-3"><i data-lucide="check-circle-2" class="text-esmeralda"></i> Estimado referencial con precio convenio</li>
+            <li class="flex items-center gap-3"><i data-lucide="check-circle-2" class="text-esmeralda"></i> Mensaje precargado listo para enviar</li>
+            <li class="flex items-center gap-3"><i data-lucide="check-circle-2" class="text-esmeralda"></i> Sin registros ni formularios eternos</li>
+          </ul>
+        </div>
+        <div class="rounded-2xl border border-aqua/20 bg-navy-950/60 p-6">
+          <div class="flex items-center gap-3">
+            <span class="grid h-12 w-12 place-items-center rounded-xl bg-gradient-to-br from-aqua to-esmeralda text-navy-950"><i data-lucide="clipboard-list" class="text-2xl"></i></span>
+            <div>
+              <p class="font-semibold text-white">Tu cotización</p>
+              <p class="text-sm text-slate-400"><span data-cart-count>0</span> producto(s) agregado(s)</p>
+            </div>
+          </div>
+          <button data-open-cart class="mt-6 flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-aqua to-esmeralda px-5 py-3.5 font-bold text-navy-950 shadow-glow-aqua transition hover:brightness-110">
+            <i data-lucide="shopping-cart"></i> Revisar y enviar por WhatsApp
+          </button>
+          <p class="mt-3 text-center text-xs text-slate-500">Se abrirá WhatsApp con el detalle precargado.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer id="contacto" class="relative mt-8 border-t border-white/8 bg-navy-900/80">
+    <div class="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+      <div class="grid gap-10 lg:grid-cols-4">
+        <div class="lg:col-span-1">
+          <a href="#hero" class="flex items-center gap-2.5">
+            <span class="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-aqua to-esmeralda text-navy-950"><i data-lucide="fish" class="text-xl"></i></span>
+            <span class="font-display text-lg font-extrabold text-white">CRAZY FISH</span>
+          </a>
+          <p class="mt-4 text-sm leading-relaxed text-slate-400">Distribuidora premium de pescados y mariscos para el canal HORECA en Santiago de Chile.</p>
+          <div class="mt-5 inline-flex items-center gap-2 rounded-xl border border-aqua/25 bg-aqua/10 px-4 py-2.5 text-sm font-semibold text-aqua">
+            <i data-lucide="snowflake"></i> Sello: Cadena de frío garantizada
+          </div>
+        </div>
+
+        <div>
+          <h4 class="font-display text-sm font-bold uppercase tracking-wide text-white">Navegación</h4>
+          <ul class="mt-4 space-y-3 text-sm text-slate-400">
+            <li><a href="#ventajas" class="transition hover:text-aqua">Ventajas</a></li>
+            <li><a href="#catalogo" class="transition hover:text-aqua">Carta & Tarifas</a></li>
+            <li><a href="#politica" class="transition hover:text-aqua">Política B2B</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="font-display text-sm font-bold uppercase tracking-wide text-white">Contacto</h4>
+          <ul class="mt-4 space-y-3 text-sm text-slate-400">
+            <li><a href="#" data-wa-generic class="inline-flex items-center gap-2 transition hover:text-esmeralda"><i data-lucide="message-circle"></i> WhatsApp comercial</a></li>
+            <li><a href="https://instagram.com/crazyfish.cl" target="_blank" rel="noopener" class="inline-flex items-center gap-2 transition hover:text-aqua"><i data-lucide="instagram"></i> @crazyfish.cl</a></li>
+            <li class="inline-flex items-center gap-2"><i data-lucide="map-pin"></i> Santiago de Chile · Canal HORECA</li>
+            <li class="inline-flex items-center gap-2"><i data-lucide="clock"></i> Entrega AM programada</li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="font-display text-sm font-bold uppercase tracking-wide text-white">Pedidos</h4>
+          <p class="mt-4 text-sm text-slate-400">Restaurantes, hoteles y casinos: solicita tu convenio de abastecimiento semanal.</p>
+          <button data-open-cart class="mt-4 inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-aqua to-esmeralda px-4 py-2.5 text-sm font-bold text-navy-950 transition hover:brightness-110">
+            <i data-lucide="clipboard-list"></i> Armar cotización
+          </button>
+        </div>
+      </div>
+
+      <div class="mt-12 flex flex-col items-center justify-between gap-4 border-t border-white/8 pt-6 text-sm text-slate-500 sm:flex-row">
+        <p>© <span id="year"></span> Crazy Fish · Pescados & Mariscos Premium. Todos los derechos reservados.</p>
+        <p class="inline-flex items-center gap-2"><i data-lucide="shield-check" class="text-esmeralda"></i> Calidad y frescura garantizada</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============ FLOATING WHATSAPP ============ -->
+  <a href="#" data-wa-generic aria-label="Cotizar por WhatsApp"
+     class="wa-pulse fixed bottom-5 right-5 z-40 grid h-14 w-14 place-items-center rounded-full bg-[#25D366] text-white shadow-2xl shadow-black/40 transition hover:scale-110">
+    <i data-lucide="message-circle" class="text-2xl"></i>
+  </a>
+
+  <!-- ============ CART DRAWER ============ -->
+  <div id="cartOverlay" class="fixed inset-0 z-50 hidden bg-black/60 opacity-0 backdrop-blur-sm"></div>
+  <aside id="cartDrawer" class="fixed right-0 top-0 z-[60] flex h-full w-full max-w-md translate-x-full flex-col border-l border-white/10 bg-navy-900 shadow-2xl">
+    <!-- Header -->
+    <div class="flex items-center justify-between border-b border-white/8 p-5">
+      <div class="flex items-center gap-3">
+        <span class="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-aqua to-esmeralda text-navy-950"><i data-lucide="clipboard-list"></i></span>
+        <div>
+          <h3 class="font-display text-lg font-bold text-white">Tu cotización</h3>
+          <p class="text-xs text-slate-400"><span data-cart-count>0</span> producto(s)</p>
+        </div>
+      </div>
+      <button id="closeCart" class="grid h-10 w-10 place-items-center rounded-xl border border-white/10 text-slate-300 transition hover:bg-white/5" aria-label="Cerrar"><i data-lucide="x"></i></button>
+    </div>
+
+    <!-- Items -->
+    <div id="cartItems" class="flex-1 space-y-3 overflow-y-auto p-5"></div>
+
+    <!-- Empty state -->
+    <div id="cartEmpty" class="flex flex-1 flex-col items-center justify-center gap-3 p-8 text-center">
+      <span class="grid h-16 w-16 place-items-center rounded-2xl bg-white/5 text-slate-500"><i data-lucide="fish-off" class="text-3xl"></i></span>
+      <p class="font-semibold text-white">Tu cotización está vacía</p>
+      <p class="text-sm text-slate-400">Agrega productos desde el catálogo para armar tu pedido.</p>
+      <button id="goCatalog" class="mt-2 inline-flex items-center gap-2 rounded-xl border border-aqua/30 bg-aqua/10 px-4 py-2.5 text-sm font-semibold text-aqua transition hover:bg-aqua/20"><i data-lucide="list"></i> Ver catálogo</button>
+    </div>
+
+    <!-- Footer / form -->
+    <div id="cartFooter" class="border-t border-white/8 p-5">
+      <div class="mb-4 flex items-center justify-between rounded-xl bg-navy-950/60 px-4 py-3">
+        <span class="text-sm text-slate-400">Estimado referencial (convenio)</span>
+        <span id="cartTotal" class="font-display text-lg font-bold text-esmeralda">$0</span>
+      </div>
+      <div class="space-y-3">
+        <div>
+          <label class="mb-1 block text-xs font-medium text-slate-400" for="restaurantName">Nombre del restaurante *</label>
+          <input id="restaurantName" type="text" placeholder="Ej: Restaurante La Marea"
+                 class="w-full rounded-xl border border-white/10 bg-navy-950/80 px-4 py-2.5 text-sm text-white placeholder-slate-500 outline-none transition focus:border-aqua focus:ring-2 focus:ring-aqua/30" />
+        </div>
+        <div>
+          <label class="mb-1 block text-xs font-medium text-slate-400" for="contactName">Tu nombre / contacto (opcional)</label>
+          <input id="contactName" type="text" placeholder="Ej: Chef Ana Pérez"
+                 class="w-full rounded-xl border border-white/10 bg-navy-950/80 px-4 py-2.5 text-sm text-white placeholder-slate-500 outline-none transition focus:border-aqua focus:ring-2 focus:ring-aqua/30" />
+        </div>
+      </div>
+      <button id="sendWhatsApp" class="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-[#25D366] px-5 py-3.5 font-bold text-white shadow-lg transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-50">
+        <i data-lucide="message-circle"></i> Enviar Pedido por WhatsApp
+      </button>
+      <p class="mt-2 text-center text-xs text-slate-500">El precio final se confirma según disponibilidad y volumen.</p>
+    </div>
+  </aside>
+
+  <!-- ============ TOAST ============ -->
+  <div id="toast" class="pointer-events-none fixed bottom-24 left-1/2 z-[70] -translate-x-1/2 translate-y-4 rounded-xl border border-esmeralda/30 bg-navy-800/95 px-5 py-3 text-sm font-semibold text-white opacity-0 shadow-2xl backdrop-blur transition-all duration-300">
+    <span class="inline-flex items-center gap-2"><i data-lucide="check-circle-2" class="text-esmeralda"></i> <span id="toastMsg">Agregado a la cotización</span></span>
+  </div>
+
+  <!-- ============ SCRIPTS ============ -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <script>
+  /* =====================================================================
+     CONFIGURACIÓN — EDITA AQUÍ
+     ↓ Reemplaza el número por el WhatsApp comercial real (formato internacional
+       sin "+", sin espacios). Chile: 56 + 9 + número. Ej: 56912345678
+  ===================================================================== */
+  const WHATSAPP_NUMBER = '56912345678'; // ← CAMBIAR por el número real de Crazy Fish
+  const INSTAGRAM_URL = 'https://instagram.com/crazyfish.cl';
+
+  /* ---------- Catálogo de productos ---------- */
+  const PRODUCTS = [
+    {
+      id: 'salmon', name: 'Salmón Salar', tag: 'Premium', cat: 'nobles',
+      icon: 'fish', desc: 'Corte graso y versátil, ideal para preparaciones en crudo y a la plancha.',
+      use: 'Sashimi, tártaro, plancha.',
+      regular: '$15.000 – $15.500/kg', convenio: '$13.500/kg', convenioNote: 'Convenio B2B (+15 kg)',
+      unit: 'kg', est: 13500,
+    },
+    {
+      id: 'reineta', name: 'Reineta Filete Extra', tag: 'Cero merma', cat: 'nobles',
+      icon: 'fish', desc: 'Filete de pulpa blanca 100% útil, sin espinas ni desperdicio.',
+      use: '100% pulpa blanca útil (cero merma).',
+      regular: '$12.000 – $13.000/kg', convenio: '$10.000 – $11.000/kg', convenioNote: 'Convenio B2B',
+      unit: 'kg', est: 10000,
+    },
+    {
+      id: 'corvina', name: 'Corvina Fileteada', tag: 'Autor', cat: 'nobles',
+      icon: 'fish', desc: 'Carne firme y elegante, perfecta para preparaciones de autor.',
+      use: 'Ceviches de autor, plancha.',
+      regular: '$10.500 – $12.000/kg', convenio: '$8.000 – $9.500/kg', convenioNote: 'Convenio B2B',
+      unit: 'kg', est: 8000,
+    },
+    {
+      id: 'merluza-austral', name: 'Merluza Austral', tag: 'Lomos firmes', cat: 'nobles',
+      icon: 'fish', desc: 'Lomos consistentes que mantienen su estructura en cocción.',
+      use: 'Lomos consistentes (no se desarma en cocción).',
+      regular: '$10.000 – $11.000/kg', convenio: '$8.000 – $9.000/kg', convenioNote: 'Convenio B2B',
+      unit: 'kg', est: 8000,
+    },
+    {
+      id: 'merluza-comun', name: 'Merluza Común', tag: 'Calibrada', cat: 'nobles',
+      icon: 'fish', desc: 'Piezas calibradas de 180g a 240g para porcionado exacto.',
+      use: 'Piezas calibradas (180g – 240g) para porcionado exacto frito.',
+      regular: '$1.200 – $1.300/un', convenio: '$900 – $1.000/un', convenioNote: 'Convenio B2B (Caja)',
+      unit: 'un', est: 900,
+    },
+    {
+      id: 'machas', name: 'Machas Frescas', tag: 'Seleccionadas', cat: 'mariscos',
+      icon: 'shell', desc: 'Lenguas seleccionadas y limpias, listas para servicio.',
+      use: 'Lenguas seleccionadas y limpias (parmesana, salteados).',
+      regular: '$8.000 – $8.500/kg', convenio: '$7.000 – $7.500/kg', convenioNote: 'Convenio B2B',
+      unit: 'kg', est: 7000,
+    },
+    {
+      id: 'paila', name: 'Paila Marina Base', tag: 'Mix', cat: 'mariscos',
+      icon: 'soup', desc: 'Mix balanceado y calibrado por porción, listo para preparar.',
+      use: 'Mix balanceado y calibrado por porción / bolsa.',
+      regular: '$3.300 – $3.400/porc', convenio: '$3.000/porc', convenioNote: 'Convenio B2B (Pack 20+)',
+      unit: 'porc', est: 3000,
+    },
+    {
+      id: 'almejas', name: 'Almejas Seleccionadas', tag: 'Malla', cat: 'mariscos',
+      icon: 'shell', desc: 'Concha homogénea y carne limpia, para crudo o caldillos.',
+      use: 'Concha homogénea, carne limpia (crudo, caldillos).',
+      regular: '$2.500 – $3.000/kg', convenio: '$2.000/kg*', convenioNote: 'Convenio B2B (Malla)',
+      unit: 'kg', est: 2000, note: true,
+    },
+    {
+      id: 'choritos', name: 'Choritos Frescos', tag: 'Malla', cat: 'mariscos',
+      icon: 'shell', desc: 'Bivalvo carnoso y limpio, calibre parejo para vapor o paellas.',
+      use: 'Bivalvo carnoso y limpio, calibre parejo (al vapor, paellas).',
+      regular: '$2.000 – $2.500/kg', convenio: '$1.500/kg*', convenioNote: 'Convenio B2B (Malla)',
+      unit: 'kg', est: 1500, note: true,
+    },
+  ];
+
+  /* ---------- Utilidades ---------- */
+  const CLP = new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP', maximumFractionDigits: 0 });
+  const $ = (s, ctx = document) => ctx.querySelector(s);
+  const $$ = (s, ctx = document) => [...ctx.querySelectorAll(s)];
+
+  const cart = new Map(); // id -> qty
+
+  /* ---------- Render catálogo ---------- */
+  function productCard(p) {
+    const noteBadge = p.note
+      ? `<span class="ml-1 rounded bg-esmeralda/15 px-1.5 py-0.5 text-[10px] font-semibold text-esmeralda">por malla</span>` : '';
+    return `
+    <article class="product-card group relative flex flex-col overflow-hidden rounded-2xl border border-white/8 bg-navy-900/70" data-cat="${p.cat}" data-id="${p.id}">
+      <div class="relative h-32 overflow-hidden bg-gradient-to-br ${p.cat === 'nobles' ? 'from-aqua/25 to-navy-800' : 'from-esmeralda/25 to-navy-800'}">
+        <div class="card-img absolute inset-0 grid place-items-center">
+          <i data-lucide="${p.icon}" class="text-6xl ${p.cat === 'nobles' ? 'text-aqua/70' : 'text-esmeralda/70'}"></i>
+        </div>
+        <span class="badge-shimmer animate-shimmer absolute left-3 top-3 rounded-full border border-esmeralda/40 px-2.5 py-1 text-[11px] font-bold text-esmeralda">${p.tag}</span>
+        <span class="absolute right-3 top-3 rounded-full bg-navy-950/70 px-2.5 py-1 text-[11px] font-medium text-slate-300">${p.cat === 'nobles' ? 'Pescado Noble' : 'Marisco Fresco'}</span>
+      </div>
+
+      <div class="flex flex-1 flex-col p-5">
+        <h3 class="font-display text-lg font-bold text-white">${p.name}</h3>
+        <p class="mt-1.5 text-sm leading-relaxed text-slate-400">${p.desc}</p>
+
+        <div class="mt-3 flex items-start gap-2 rounded-xl bg-navy-950/60 p-3">
+          <i data-lucide="utensils-crossed" class="mt-0.5 text-aqua"></i>
+          <p class="text-xs leading-relaxed text-slate-300"><span class="font-semibold text-white">Uso:</span> ${p.use}</p>
+        </div>
+
+        <div class="mt-4 grid grid-cols-2 gap-2">
+          <div class="rounded-xl border border-white/8 bg-navy-950/40 p-3">
+            <p class="text-[11px] uppercase tracking-wide text-slate-500">Regular</p>
+            <p class="mt-0.5 text-sm font-semibold text-slate-300">${p.regular}</p>
+          </div>
+          <div class="rounded-xl border border-esmeralda/30 bg-esmeralda/10 p-3">
+            <p class="text-[11px] font-semibold uppercase tracking-wide text-esmeralda">${p.convenioNote}${noteBadge}</p>
+            <p class="mt-0.5 text-sm font-bold text-esmeralda">${p.convenio}</p>
+          </div>
+        </div>
+
+        <div class="mt-4 flex items-center gap-2">
+          <div class="flex items-center rounded-xl border border-white/10 bg-navy-950/60">
+            <button class="stepper-btn grid h-9 w-9 place-items-center rounded-l-xl text-slate-300" data-step="-1" data-id="${p.id}" aria-label="Restar">−</button>
+            <input type="number" min="1" value="1" data-qty="${p.id}" class="h-9 w-10 border-0 bg-transparent text-center text-sm font-semibold text-white outline-none [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none" />
+            <button class="stepper-btn grid h-9 w-9 place-items-center rounded-r-xl text-slate-300" data-step="1" data-id="${p.id}" aria-label="Sumar">+</button>
+          </div>
+          <button class="add-btn flex flex-1 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-aqua to-esmeralda px-3 py-2 text-sm font-bold text-navy-950 transition hover:brightness-110" data-id="${p.id}">
+            <i data-lucide="plus"></i> Agregar
+          </button>
+        </div>
+      </div>
+    </article>`;
+  }
+
+  function renderCatalog(filter = 'todos') {
+    const grid = $('#productGrid');
+    const list = filter === 'todos' ? PRODUCTS : PRODUCTS.filter(p => p.cat === filter);
+    grid.innerHTML = list.map(productCard).join('');
+    lucide.createIcons();
+    // stagger animation
+    if (window.gsap) {
+      gsap.fromTo(grid.children,
+        { opacity: 0, y: 24 },
+        { opacity: 1, y: 0, duration: .5, stagger: .06, ease: 'power2.out', overwrite: true });
+    }
+  }
+
+  /* ---------- Carrito ---------- */
+  function getQty(id) {
+    const input = $(`[data-qty="${id}"]`);
+    let v = parseInt(input?.value, 10);
+    if (isNaN(v) || v < 1) v = 1;
+    return v;
+  }
+
+  function addToCart(id) {
+    const qty = getQty(id);
+    cart.set(id, (cart.get(id) || 0) + qty);
+    updateCartUI();
+    const p = PRODUCTS.find(x => x.id === id);
+    showToast(`${p.name} agregado (${qty} ${p.unit})`);
+  }
+
+  function updateCartUI() {
+    const count = [...cart.values()].reduce((a, b) => a + b, 0);
+    $$('[data-cart-count]').forEach(el => el.textContent = count);
+
+    const itemsEl = $('#cartItems');
+    const emptyEl = $('#cartEmpty');
+    const footerEl = $('#cartFooter');
+
+    if (cart.size === 0) {
+      itemsEl.classList.add('hidden');
+      emptyEl.classList.remove('hidden');
+      footerEl.classList.add('hidden');
+    } else {
+      itemsEl.classList.remove('hidden');
+      emptyEl.classList.add('hidden');
+      footerEl.classList.remove('hidden');
+
+      itemsEl.innerHTML = [...cart.entries()].map(([id, qty]) => {
+        const p = PRODUCTS.find(x => x.id === id);
+        const sub = p.est * qty;
+        return `
+        <div class="flex items-center gap-3 rounded-2xl border border-white/8 bg-navy-950/50 p-3">
+          <span class="grid h-11 w-11 shrink-0 place-items-center rounded-xl ${p.cat === 'nobles' ? 'bg-aqua/15 text-aqua' : 'bg-esmeralda/15 text-esmeralda'}"><i data-lucide="${p.icon}"></i></span>
+          <div class="min-w-0 flex-1">
+            <p class="truncate text-sm font-semibold text-white">${p.name}</p>
+            <p class="text-xs text-esmeralda">${p.convenio}</p>
+          </div>
+          <div class="flex items-center rounded-lg border border-white/10">
+            <button class="stepper-btn grid h-8 w-8 place-items-center rounded-l-lg text-slate-300" data-cart-step="-1" data-id="${id}">−</button>
+            <span class="w-9 text-center text-sm font-semibold text-white">${qty}</span>
+            <button class="stepper-btn grid h-8 w-8 place-items-center rounded-r-lg text-slate-300" data-cart-step="1" data-id="${id}">+</button>
+          </div>
+          <button class="grid h-8 w-8 shrink-0 place-items-center rounded-lg text-slate-500 transition hover:bg-red-500/10 hover:text-red-400" data-cart-remove="${id}" aria-label="Quitar"><i data-lucide="trash-2" class="text-base"></i></button>
+        </div>`;
+      }).join('');
+
+      const total = [...cart.entries()].reduce((sum, [id, qty]) => {
+        const p = PRODUCTS.find(x => x.id === id);
+        return sum + p.est * qty;
+      }, 0);
+      $('#cartTotal').textContent = CLP.format(total);
+      lucide.createIcons();
+    }
+  }
+
+  function buildWhatsAppMessage() {
+    const rest = $('#restaurantName').value.trim() || 'Sin especificar';
+    const contact = $('#contactName').value.trim();
+    let msg = `🐟 *COTIZACIÓN CRAZY FISH*\n`;
+    msg += `━━━━━━━━━━━━━━━\n`;
+    msg += `🍽️ *Restaurante:* ${rest}\n`;
+    if (contact) msg += `👤 *Contacto:* ${contact}\n`;
+    msg += `\n*Detalle del pedido:*\n`;
+    let total = 0;
+    [...cart.entries()].forEach(([id, qty]) => {
+      const p = PRODUCTS.find(x => x.id === id);
+      total += p.est * qty;
+      msg += `• ${p.name} — ${qty} ${p.unit}  _(${p.convenio})_\n`;
+    });
+    msg += `\n💰 *Estimado referencial (convenio):* ${CLP.format(total)}\n`;
+    msg += `_El precio final se confirma según disponibilidad y volumen._\n`;
+    msg += `━━━━━━━━━━━━━━━\n`;
+    msg += `Enviado desde crazyfish.cl 🌊`;
+    return msg;
+  }
+
+  function sendWhatsApp() {
+    const rest = $('#restaurantName').value.trim();
+    if (!rest) {
+      $('#restaurantName').focus();
+      $('#restaurantName').classList.add('border-red-400', 'ring-2', 'ring-red-400/30');
+      showToast('Ingresa el nombre del restaurante', true);
+      return;
+    }
+    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(buildWhatsAppMessage())}`;
+    window.open(url, '_blank', 'noopener');
+  }
+
+  function genericWhatsApp() {
+    const msg = '¡Hola Crazy Fish! 🐟 Me gustaría cotizar pescados y mariscos premium para mi restaurante.';
+    return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
+  }
+
+  /* ---------- Drawer ---------- */
+  function openCart() {
+    $('#cartOverlay').classList.remove('hidden');
+    requestAnimationFrame(() => {
+      $('#cartOverlay').style.opacity = '1';
+      $('#cartDrawer').classList.remove('translate-x-full');
+    });
+    document.body.style.overflow = 'hidden';
+  }
+  function closeCart() {
+    $('#cartOverlay').style.opacity = '0';
+    $('#cartDrawer').classList.add('translate-x-full');
+    setTimeout(() => $('#cartOverlay').classList.add('hidden'), 350);
+    document.body.style.overflow = '';
+  }
+
+  /* ---------- Toast ---------- */
+  let toastTimer;
+  function showToast(text, isError = false) {
+    const toast = $('#toast');
+    $('#toastMsg').textContent = text;
+    toast.classList.toggle('border-red-400/40', isError);
+    toast.classList.toggle('border-esmeralda/30', !isError);
+    toast.style.opacity = '1';
+    toast.style.transform = 'translate(-50%, 0)';
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => {
+      toast.style.opacity = '0';
+      toast.style.transform = 'translate(-50%, 1rem)';
+    }, 2400);
+  }
+
+  /* ---------- Eventos ---------- */
+  document.addEventListener('DOMContentLoaded', () => {
+    lucide.createIcons();
+    renderCatalog('todos');
+    updateCartUI();
+    $('#year').textContent = new Date().getFullYear();
+
+    // Enlaces WhatsApp genéricos
+    $$('[data-wa-generic]').forEach(a => a.setAttribute('href', genericWhatsApp()));
+
+    // Tabs
+    $$('.tab-btn').forEach(btn => btn.addEventListener('click', () => {
+      $$('.tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderCatalog(btn.dataset.filter);
+    }));
+
+    // Delegación catálogo (steppers + add)
+    $('#productGrid').addEventListener('click', e => {
+      const step = e.target.closest('[data-step]');
+      const add = e.target.closest('.add-btn');
+      if (step) {
+        const input = $(`[data-qty="${step.dataset.id}"]`);
+        let v = parseInt(input.value, 10) || 1;
+        v = Math.max(1, v + parseInt(step.dataset.step, 10));
+        input.value = v;
+      }
+      if (add) addToCart(add.dataset.id);
+    });
+
+    // Delegación carrito
+    $('#cartItems').addEventListener('click', e => {
+      const step = e.target.closest('[data-cart-step]');
+      const rm = e.target.closest('[data-cart-remove]');
+      if (step) {
+        const id = step.dataset.id;
+        let v = (cart.get(id) || 1) + parseInt(step.dataset.step, 10);
+        if (v < 1) cart.delete(id); else cart.set(id, v);
+        updateCartUI();
+      }
+      if (rm) { cart.delete(rm.dataset.cartRemove); updateCartUI(); }
+    });
+
+    // Abrir / cerrar carrito
+    $$('[data-open-cart]').forEach(b => b.addEventListener('click', openCart));
+    $('#closeCart').addEventListener('click', closeCart);
+    $('#cartOverlay').addEventListener('click', closeCart);
+    $('#goCatalog').addEventListener('click', () => { closeCart(); location.hash = '#catalogo'; });
+    $('#sendWhatsApp').addEventListener('click', sendWhatsApp);
+    $('#restaurantName').addEventListener('input', e => e.target.classList.remove('border-red-400', 'ring-2', 'ring-red-400/30'));
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeCart(); });
+
+    // Menú móvil
+    const menu = $('#mobileMenu');
+    $('#menuToggle').addEventListener('click', () => menu.classList.toggle('hidden'));
+    $$('.mobile-link').forEach(l => l.addEventListener('click', () => menu.classList.add('hidden')));
+
+    // Navbar shrink al hacer scroll
+    const nav = $('#navbar');
+    const onScroll = () => nav.classList.toggle('py-0', window.scrollY > 20);
+    window.addEventListener('scroll', onScroll);
+
+    // Animaciones GSAP
+    if (window.gsap) {
+      gsap.from('[data-hero]', { opacity: 0, y: 30, duration: .8, stagger: .12, ease: 'power3.out', delay: .1 });
+      if (window.ScrollTrigger) {
+        gsap.registerPlugin(ScrollTrigger);
+        $$('[data-reveal]').forEach(el => {
+          gsap.from(el, {
+            opacity: 0, y: 40, duration: .8, ease: 'power2.out',
+            scrollTrigger: { trigger: el, start: 'top 85%' }
+          });
+        });
+      }
+    }
+  });
+  </script>
+</body>
+</html>
