@@ -639,6 +639,15 @@
     },
   ];
 
+  /* Fotos de producto (assets/) — asignadas por id */
+  const PRODUCT_IMAGES = {
+    salmon: 'assets/salmon.webp', reineta: 'assets/reineta.webp', corvina: 'assets/corvina.webp',
+    'merluza-austral': 'assets/merluza-austral.webp', 'merluza-comun': 'assets/merluza-comun.webp',
+    machas: 'assets/machas.webp', paila: 'assets/paila.webp', almejas: 'assets/almejas.webp',
+    choritos: 'assets/choritos.webp',
+  };
+  PRODUCTS.forEach(p => { if (PRODUCT_IMAGES[p.id]) p.img = PRODUCT_IMAGES[p.id]; });
+
   /* ---------- Utilidades ---------- */
   const CLP = new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP', maximumFractionDigits: 0 });
   const $ = (s, ctx = document) => ctx.querySelector(s);
