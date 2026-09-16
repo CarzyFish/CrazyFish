@@ -13,6 +13,12 @@
   <meta property="og:title" content="Crazy Fish — Pescados & Mariscos Premium" />
   <meta property="og:description" content="Suministro directo para restaurantes, hoteles y canal gastronómico en Santiago. Rendimiento real, entrega AM y cadena de frío garantizada." />
   <meta property="og:locale" content="es_CL" />
+  <meta property="og:url" content="https://carzyfish.github.io/CrazyFish/" />
+  <meta property="og:image" content="https://carzyfish.github.io/CrazyFish/assets/hero.webp" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Crazy Fish — Pescados & Mariscos Premium" />
+  <meta name="twitter:image" content="https://carzyfish.github.io/CrazyFish/assets/hero.webp" />
+  <link rel="canonical" href="https://carzyfish.github.io/CrazyFish/" />
 
   <!-- Tailwind CSS (Play CDN) -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -153,6 +159,7 @@
         <!-- Desktop links -->
         <div class="hidden items-center gap-8 md:flex">
           <a href="#ventajas" class="text-sm font-medium text-slate-300 transition hover:text-aqua">Ventajas</a>
+          <a href="#proceso" class="text-sm font-medium text-slate-300 transition hover:text-aqua">Proceso</a>
           <a href="#catalogo" class="text-sm font-medium text-slate-300 transition hover:text-aqua">Carta & Tarifas</a>
           <a href="#politica" class="text-sm font-medium text-slate-300 transition hover:text-aqua">Política B2B</a>
           <a href="#contacto" class="text-sm font-medium text-slate-300 transition hover:text-aqua">Contacto</a>
@@ -178,6 +185,7 @@
       <div id="mobileMenu" class="mt-2 hidden overflow-hidden rounded-2xl border border-white/5 bg-navy-900/95 backdrop-blur-xl md:hidden">
         <div class="flex flex-col p-2">
           <a href="#ventajas" class="mobile-link rounded-xl px-4 py-3 text-sm font-medium text-slate-200 hover:bg-white/5">Ventajas</a>
+          <a href="#proceso" class="mobile-link rounded-xl px-4 py-3 text-sm font-medium text-slate-200 hover:bg-white/5">Proceso</a>
           <a href="#catalogo" class="mobile-link rounded-xl px-4 py-3 text-sm font-medium text-slate-200 hover:bg-white/5">Carta & Tarifas</a>
           <a href="#politica" class="mobile-link rounded-xl px-4 py-3 text-sm font-medium text-slate-200 hover:bg-white/5">Política B2B</a>
           <a href="#contacto" class="mobile-link rounded-xl px-4 py-3 text-sm font-medium text-slate-200 hover:bg-white/5">Contacto</a>
@@ -315,11 +323,13 @@
   </section>
 
   <!-- ============ VENTAJAS (4 pilares) ============ -->
-  <section id="ventajas" class="relative py-20 sm:py-24">
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+  <section id="ventajas" class="relative overflow-hidden py-20 sm:py-24">
+    <div class="absolute inset-0 opacity-[0.14]" style="background: url('assets/icetex.webp') center / cover no-repeat"></div>
+    <div class="absolute inset-0 bg-gradient-to-b from-navy-950 via-navy-950/88 to-navy-950"></div>
+    <div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div class="mx-auto max-w-2xl text-center" data-reveal>
         <p class="text-sm font-semibold uppercase tracking-[0.2em] text-aqua">Por qué Crazy Fish</p>
-        <h2 class="mt-3 font-display text-3xl font-extrabold tracking-tight text-white sm:text-4xl">Cuatro pilares que ordenan tu cocina</h2>
+        <h2 class="mt-3 font-display text-3xl font-extrabold tracking-tight text-white sm:text-5xl">Cuatro pilares que ordenan tu cocina</h2>
         <p class="mt-4 text-slate-400">Pensado para chefs y administradores que necesitan costos predecibles y producto listo para servicio.</p>
       </div>
 
@@ -356,6 +366,60 @@
     </div>
   </section>
 
+  <!-- ============ PROCESO: Del mar a tu cocina ============ -->
+  <section id="proceso" class="relative overflow-hidden py-20 sm:py-28">
+    <div class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-aqua/30 to-transparent"></div>
+    <div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="mx-auto max-w-2xl text-center" data-reveal>
+        <p class="text-sm font-semibold uppercase tracking-[0.2em] text-aqua">Trazabilidad</p>
+        <h2 class="mt-3 font-display text-3xl font-extrabold tracking-tight text-white sm:text-5xl">Del mar a tu cocina</h2>
+        <p class="mt-4 text-slate-400">Cada eslabón bajo control: desde la descarga en puerto hasta el plato que sale de tu pase.</p>
+      </div>
+
+      <div class="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <article data-reveal class="group relative overflow-hidden rounded-2xl border border-white/8">
+          <img src="assets/origen.webp" alt="Descarga de producto fresco en puerto" loading="lazy" class="h-72 w-full object-cover transition duration-700 group-hover:scale-105" />
+          <div class="absolute inset-0 bg-gradient-to-t from-navy-950 via-navy-950/55 to-transparent"></div>
+          <div class="absolute inset-x-0 bottom-0 p-5">
+            <span class="font-display text-xs font-bold tracking-[0.25em] text-aqua">01</span>
+            <h3 class="mt-1.5 font-display text-lg font-bold text-white">Origen</h3>
+            <p class="mt-1.5 text-sm leading-relaxed text-slate-300">Selección diaria en la descarga de puerto, en cajas con hielo.</p>
+          </div>
+        </article>
+
+        <article data-reveal class="group relative overflow-hidden rounded-2xl border border-white/8">
+          <img src="assets/coldchain.webp" alt="Cajas térmicas con hielo y filetes frescos" loading="lazy" class="h-72 w-full object-cover transition duration-700 group-hover:scale-105" />
+          <div class="absolute inset-0 bg-gradient-to-t from-navy-950 via-navy-950/55 to-transparent"></div>
+          <div class="absolute inset-x-0 bottom-0 p-5">
+            <span class="font-display text-xs font-bold tracking-[0.25em] text-aqua">02</span>
+            <h3 class="mt-1.5 font-display text-lg font-bold text-white">Cadena de frío</h3>
+            <p class="mt-1.5 text-sm leading-relaxed text-slate-300">Traslado en cajas térmicas con control de temperatura, sin quiebres.</p>
+          </div>
+        </article>
+
+        <article data-reveal class="group relative overflow-hidden rounded-2xl border border-white/8">
+          <img src="assets/chef.webp" alt="Chef emplatando producto en cocina profesional" loading="lazy" class="h-72 w-full object-cover transition duration-700 group-hover:scale-105" />
+          <div class="absolute inset-0 bg-gradient-to-t from-navy-950 via-navy-950/55 to-transparent"></div>
+          <div class="absolute inset-x-0 bottom-0 p-5">
+            <span class="font-display text-xs font-bold tracking-[0.25em] text-aqua">03</span>
+            <h3 class="mt-1.5 font-display text-lg font-bold text-white">Tu cocina</h3>
+            <p class="mt-1.5 text-sm leading-relaxed text-slate-300">Entrega AM: filetes limpios y calibrados, listos para mise en place.</p>
+          </div>
+        </article>
+
+        <article data-reveal class="group relative overflow-hidden rounded-2xl border border-white/8">
+          <img src="assets/plated.webp" alt="Plato terminado de sashimi y ceviche" loading="lazy" class="h-72 w-full object-cover transition duration-700 group-hover:scale-105" />
+          <div class="absolute inset-0 bg-gradient-to-t from-navy-950 via-navy-950/55 to-transparent"></div>
+          <div class="absolute inset-x-0 bottom-0 p-5">
+            <span class="font-display text-xs font-bold tracking-[0.25em] text-aqua">04</span>
+            <h3 class="mt-1.5 font-display text-lg font-bold text-white">Tu carta</h3>
+            <p class="mt-1.5 text-sm leading-relaxed text-slate-300">Producto que rinde en el plato y se ve impecable, servicio tras servicio.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
   <!-- ============ CATÁLOGO ============ -->
   <section id="catalogo" class="relative py-20 sm:py-24">
     <div class="absolute inset-0 bg-gradient-to-b from-navy-900/50 to-transparent"></div>
@@ -363,7 +427,7 @@
       <div class="flex flex-col items-start justify-between gap-6 lg:flex-row lg:items-end" data-reveal>
         <div class="max-w-2xl">
           <p class="text-sm font-semibold uppercase tracking-[0.2em] text-aqua">Carta & Tarifas</p>
-          <h2 class="mt-3 font-display text-3xl font-extrabold tracking-tight text-white sm:text-4xl">Catálogo para canal gastronómico</h2>
+          <h2 class="mt-3 font-display text-3xl font-extrabold tracking-tight text-white sm:text-5xl">Catálogo para canal gastronómico</h2>
           <p class="mt-4 text-slate-400">Precio suelto de referencia y <span class="font-semibold text-esmeralda">precio convenio B2B</span> por volumen. Selecciona cantidades y arma tu cotización.</p>
         </div>
         <!-- Tabs -->
@@ -419,7 +483,10 @@
   <!-- ============ COTIZADOR CTA ============ -->
   <section class="py-12 sm:py-16">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <div data-reveal class="grid gap-8 rounded-3xl border border-white/8 bg-navy-900/60 p-8 sm:p-10 lg:grid-cols-2 lg:items-center">
+      <div data-reveal class="relative overflow-hidden rounded-3xl border border-white/8">
+        <img src="assets/restaurant.webp" alt="" aria-hidden="true" loading="lazy" class="absolute inset-0 h-full w-full object-cover opacity-30" />
+        <div class="absolute inset-0 bg-gradient-to-r from-navy-950 via-navy-950/92 to-navy-950/70"></div>
+        <div class="relative grid gap-8 p-8 sm:p-10 lg:grid-cols-2 lg:items-center">
         <div>
           <p class="text-sm font-semibold uppercase tracking-[0.2em] text-aqua">Cotizador rápido</p>
           <h3 class="mt-3 font-display text-3xl font-extrabold text-white">Arma tu pedido en segundos</h3>
@@ -442,6 +509,7 @@
             <i data-lucide="shopping-cart"></i> Revisar y enviar por WhatsApp
           </button>
           <p class="mt-3 text-center text-xs text-slate-500">Se abrirá WhatsApp con el detalle precargado.</p>
+        </div>
         </div>
       </div>
     </div>
@@ -466,6 +534,7 @@
           <h4 class="font-display text-sm font-bold uppercase tracking-wide text-white">Navegación</h4>
           <ul class="mt-4 space-y-3 text-sm text-slate-400">
             <li><a href="#ventajas" class="transition hover:text-aqua">Ventajas</a></li>
+            <li><a href="#proceso" class="transition hover:text-aqua">Del mar a tu cocina</a></li>
             <li><a href="#catalogo" class="transition hover:text-aqua">Carta & Tarifas</a></li>
             <li><a href="#politica" class="transition hover:text-aqua">Política B2B</a></li>
           </ul>
@@ -663,7 +732,7 @@
       ? `<span class="ml-1 rounded bg-esmeralda/15 px-1.5 py-0.5 text-[10px] font-semibold text-esmeralda">por malla</span>` : '';
     return `
     <article class="product-card group relative flex flex-col overflow-hidden rounded-2xl border border-white/8 bg-navy-900/70" data-cat="${p.cat}" data-id="${p.id}">
-      <div class="relative h-40 overflow-hidden bg-gradient-to-br ${p.cat === 'nobles' ? 'from-aqua/25 to-navy-800' : 'from-esmeralda/25 to-navy-800'}">
+      <div class="relative h-48 overflow-hidden bg-gradient-to-br ${p.cat === 'nobles' ? 'from-aqua/25 to-navy-800' : 'from-esmeralda/25 to-navy-800'}">
         ${p.img
           ? `<img src="${p.img}" alt="${p.name}" loading="lazy" class="card-img absolute inset-0 h-full w-full object-cover" />
              <div class="absolute inset-0 bg-gradient-to-t from-navy-950/80 via-navy-950/10 to-transparent"></div>`
@@ -672,11 +741,11 @@
              </div>`}
         <span class="badge-shimmer animate-shimmer absolute left-3 top-3 rounded-full border border-esmeralda/40 px-2.5 py-1 text-[11px] font-bold text-esmeralda">${p.tag}</span>
         <span class="absolute right-3 top-3 rounded-full bg-navy-950/70 px-2.5 py-1 text-[11px] font-medium text-slate-300">${p.cat === 'nobles' ? 'Pescado Noble' : 'Marisco Fresco'}</span>
+        <h3 class="absolute inset-x-0 bottom-0 p-4 font-display text-xl font-bold leading-tight text-white" style="text-shadow:0 2px 12px rgba(0,0,0,.65)">${p.name}</h3>
       </div>
 
       <div class="flex flex-1 flex-col p-5">
-        <h3 class="font-display text-lg font-bold text-white">${p.name}</h3>
-        <p class="mt-1.5 text-sm leading-relaxed text-slate-400">${p.desc}</p>
+        <p class="text-sm leading-relaxed text-slate-400">${p.desc}</p>
 
         <div class="mt-3 flex items-start gap-2 rounded-xl bg-navy-950/60 p-3">
           <i data-lucide="utensils-crossed" class="mt-0.5 text-aqua"></i>
