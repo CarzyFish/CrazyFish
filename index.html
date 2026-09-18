@@ -20,44 +20,8 @@
   <meta name="twitter:image" content="https://carzyfish.github.io/CrazyFish/assets/hero.webp" />
   <link rel="canonical" href="https://carzyfish.github.io/CrazyFish/" />
 
-  <!-- Tailwind CSS (Play CDN) -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            navy: {
-              950: '#070e17',
-              900: '#0b1624',
-              850: '#0e1b2b',
-              800: '#122236',
-              700: '#1b3149',
-            },
-            aqua:    '#38bdf8', // cyan accent
-            esmeralda:'#34d399', // convenio B2B green
-            plata:   '#cbd5e1',
-          },
-          fontFamily: {
-            sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
-            display: ['Sora', 'Inter', 'ui-sans-serif', 'sans-serif'],
-          },
-          boxShadow: {
-            'glow-aqua': '0 0 0 1px rgba(56,189,248,0.35), 0 20px 45px -20px rgba(56,189,248,0.55)',
-            'glow-esm':  '0 0 0 1px rgba(52,211,153,0.35), 0 20px 45px -20px rgba(52,211,153,0.45)',
-          },
-          keyframes: {
-            floaty: { '0%,100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-12px)' } },
-            shimmer: { '0%': { backgroundPosition: '-200% 0' }, '100%': { backgroundPosition: '200% 0' } },
-          },
-          animation: {
-            floaty: 'floaty 6s ease-in-out infinite',
-            shimmer: 'shimmer 3s linear infinite',
-          },
-        },
-      },
-    };
-  </script>
+  <!-- Tailwind CSS precompilado (sin compilar en el navegador) -->
+  <link rel="stylesheet" href="assets/tailwind.css" />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -135,13 +99,53 @@
 
     [data-lucide] { width: 1em; height: 1em; }
 
+    /* Foco visible para navegación por teclado */
+    :where(a, button, input, [tabindex]):focus-visible {
+      outline: 2px solid #38bdf8; outline-offset: 3px; border-radius: 8px;
+    }
+
     @media (prefers-reduced-motion: reduce) {
       * { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
     }
   </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": ["LocalBusiness", "FoodEstablishment"],
+        "@id": "https://carzyfish.github.io/CrazyFish/#business",
+        "name": "Crazy Fish",
+        "description": "Distribuidora de pescados y mariscos premium para restaurantes, hoteles y canal gastron\u00f3mico (HORECA) en Santiago de Chile.",
+        "url": "https://carzyfish.github.io/CrazyFish/",
+        "image": "https://carzyfish.github.io/CrazyFish/assets/hero.webp",
+        "telephone": "+56971972530",
+        "priceRange": "$$",
+        "areaServed": { "@type": "City", "name": "Santiago", "addressRegion": "Regi\u00f3n Metropolitana", "addressCountry": "CL" },
+        "sameAs": ["https://instagram.com/crazyfish.cl"]
+      },
+      {
+        "@type": "ItemList",
+        "name": "Carta y tarifas Crazy Fish",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "item": { "@type": "Product", "name": "Salm\u00f3n Salar", "description": "Filete premium para sashimi, t\u00e1rtaro y plancha.", "category": "Pescados y mariscos", "brand": { "@type": "Brand", "name": "Crazy Fish" }, "offers": { "@type": "AggregateOffer", "priceCurrency": "CLP", "lowPrice": 15000, "highPrice": 15500, "availability": "https://schema.org/InStock", "eligibleQuantity": { "@type": "QuantitativeValue", "unitCode": "KGM" } } } },
+          { "@type": "ListItem", "position": 2, "item": { "@type": "Product", "name": "Reineta Filete Extra", "description": "Filete de pulpa blanca 100% \u00fatil, sin merma.", "category": "Pescados y mariscos", "brand": { "@type": "Brand", "name": "Crazy Fish" }, "offers": { "@type": "AggregateOffer", "priceCurrency": "CLP", "lowPrice": 12000, "highPrice": 13000, "availability": "https://schema.org/InStock", "eligibleQuantity": { "@type": "QuantitativeValue", "unitCode": "KGM" } } } },
+          { "@type": "ListItem", "position": 3, "item": { "@type": "Product", "name": "Corvina Fileteada", "description": "Carne firme para ceviches de autor y plancha.", "category": "Pescados y mariscos", "brand": { "@type": "Brand", "name": "Crazy Fish" }, "offers": { "@type": "AggregateOffer", "priceCurrency": "CLP", "lowPrice": 10500, "highPrice": 12000, "availability": "https://schema.org/InStock", "eligibleQuantity": { "@type": "QuantitativeValue", "unitCode": "KGM" } } } },
+          { "@type": "ListItem", "position": 4, "item": { "@type": "Product", "name": "Merluza Austral", "description": "Lomos consistentes que no se desarman en cocci\u00f3n.", "category": "Pescados y mariscos", "brand": { "@type": "Brand", "name": "Crazy Fish" }, "offers": { "@type": "AggregateOffer", "priceCurrency": "CLP", "lowPrice": 10000, "highPrice": 11000, "availability": "https://schema.org/InStock", "eligibleQuantity": { "@type": "QuantitativeValue", "unitCode": "KGM" } } } },
+          { "@type": "ListItem", "position": 5, "item": { "@type": "Product", "name": "Merluza Com\u00fan", "description": "Piezas calibradas 180-240 g para porcionado exacto.", "category": "Pescados y mariscos", "brand": { "@type": "Brand", "name": "Crazy Fish" }, "offers": { "@type": "AggregateOffer", "priceCurrency": "CLP", "lowPrice": 1200, "highPrice": 1300, "availability": "https://schema.org/InStock", "eligibleQuantity": { "@type": "QuantitativeValue", "unitCode": "C62" } } } },
+          { "@type": "ListItem", "position": 6, "item": { "@type": "Product", "name": "Machas Frescas", "description": "Lenguas seleccionadas y limpias.", "category": "Pescados y mariscos", "brand": { "@type": "Brand", "name": "Crazy Fish" }, "offers": { "@type": "AggregateOffer", "priceCurrency": "CLP", "lowPrice": 8000, "highPrice": 8500, "availability": "https://schema.org/InStock", "eligibleQuantity": { "@type": "QuantitativeValue", "unitCode": "KGM" } } } },
+          { "@type": "ListItem", "position": 7, "item": { "@type": "Product", "name": "Paila Marina Base", "description": "Mix balanceado y calibrado por porci\u00f3n.", "category": "Pescados y mariscos", "brand": { "@type": "Brand", "name": "Crazy Fish" }, "offers": { "@type": "AggregateOffer", "priceCurrency": "CLP", "lowPrice": 3300, "highPrice": 3400, "availability": "https://schema.org/InStock", "eligibleQuantity": { "@type": "QuantitativeValue", "unitCode": "C62" } } } },
+          { "@type": "ListItem", "position": 8, "item": { "@type": "Product", "name": "Almejas Seleccionadas", "description": "Concha homog\u00e9nea y carne limpia.", "category": "Pescados y mariscos", "brand": { "@type": "Brand", "name": "Crazy Fish" }, "offers": { "@type": "AggregateOffer", "priceCurrency": "CLP", "lowPrice": 2500, "highPrice": 3000, "availability": "https://schema.org/InStock", "eligibleQuantity": { "@type": "QuantitativeValue", "unitCode": "KGM" } } } },
+          { "@type": "ListItem", "position": 9, "item": { "@type": "Product", "name": "Choritos Frescos", "description": "Bivalvo carnoso y limpio, calibre parejo.", "category": "Pescados y mariscos", "brand": { "@type": "Brand", "name": "Crazy Fish" }, "offers": { "@type": "AggregateOffer", "priceCurrency": "CLP", "lowPrice": 2000, "highPrice": 2500, "availability": "https://schema.org/InStock", "eligibleQuantity": { "@type": "QuantitativeValue", "unitCode": "KGM" } } } }
+        ]
+      }
+    ]
+  }
+  </script>
 </head>
 
 <body class="bg-navy-950 text-slate-200 antialiased selection:bg-aqua/30 selection:text-white">
+  <a href="#catalogo" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-aqua focus:px-4 focus:py-2 focus:font-bold focus:text-navy-950">Saltar al catálogo</a>
 
   <!-- ============ NAVBAR ============ -->
   <header id="navbar" class="fixed top-0 inset-x-0 z-50 transition-all duration-300">
@@ -430,10 +434,10 @@
           <p class="mt-4 text-slate-400">Precio suelto de referencia y <span class="font-semibold text-esmeralda">precio convenio B2B</span> por volumen. Selecciona cantidades y arma tu cotización.</p>
         </div>
         <!-- Tabs -->
-        <div class="flex flex-wrap gap-2 rounded-2xl border border-white/8 bg-navy-900/60 p-1.5" role="tablist">
-          <button class="tab-btn active rounded-xl px-4 py-2 text-sm font-semibold text-slate-300" data-filter="todos">Todos</button>
-          <button class="tab-btn rounded-xl px-4 py-2 text-sm font-semibold text-slate-300" data-filter="nobles">Pescados Nobles</button>
-          <button class="tab-btn rounded-xl px-4 py-2 text-sm font-semibold text-slate-300" data-filter="mariscos">Mariscos Frescos</button>
+        <div class="flex flex-wrap gap-2 rounded-2xl border border-white/8 bg-navy-900/60 p-1.5" role="group" aria-label="Filtrar catálogo por categoría">
+          <button class="tab-btn active rounded-xl px-4 py-2 text-sm font-semibold text-slate-300" data-filter="todos" aria-pressed="true">Todos</button>
+          <button class="tab-btn rounded-xl px-4 py-2 text-sm font-semibold text-slate-300" data-filter="nobles" aria-pressed="false">Pescados Nobles</button>
+          <button class="tab-btn rounded-xl px-4 py-2 text-sm font-semibold text-slate-300" data-filter="mariscos" aria-pressed="false">Mariscos Frescos</button>
         </div>
       </div>
 
@@ -449,7 +453,7 @@
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div data-reveal class="relative overflow-hidden rounded-3xl border border-esmeralda/25 bg-gradient-to-br from-navy-850 to-navy-900 p-8 sm:p-12">
         <div class="orb -right-10 -top-10 h-64 w-64 bg-esmeralda/25"></div>
-        <div class="relative grid gap-8 lg:grid-cols-[auto,1fr] lg:items-center">
+        <div class="relative grid gap-8 lg:grid-cols-[auto_1fr] lg:items-center">
           <div class="grid h-16 w-16 place-items-center rounded-2xl bg-esmeralda/15 text-esmeralda shadow-glow-esm">
             <i data-lucide="handshake" class="text-3xl"></i>
           </div>
@@ -722,6 +726,7 @@
   const CLP = new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP', maximumFractionDigits: 0 });
   const $ = (s, ctx = document) => ctx.querySelector(s);
   const $$ = (s, ctx = document) => [...ctx.querySelectorAll(s)];
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   const cart = new Map(); // id -> qty
 
@@ -751,7 +756,7 @@
           <p class="text-xs leading-relaxed text-slate-300"><span class="font-semibold text-white">Uso:</span> ${p.use}</p>
         </div>
 
-        <div class="mt-4 grid grid-cols-2 gap-2">
+        <div class="mt-auto grid grid-cols-2 gap-2 pt-4">
           <div class="rounded-xl border border-white/8 bg-navy-950/40 p-3">
             <p class="text-[11px] uppercase tracking-wide text-slate-500">Regular</p>
             <p class="mt-0.5 text-sm font-semibold text-slate-300">${p.regular}</p>
@@ -780,9 +785,9 @@
     const grid = $('#productGrid');
     const list = filter === 'todos' ? PRODUCTS : PRODUCTS.filter(p => p.cat === filter);
     grid.innerHTML = list.map(productCard).join('');
-    lucide.createIcons();
+    if (window.lucide) lucide.createIcons();
     // stagger animation
-    if (window.gsap) {
+    if (window.gsap && !prefersReduced) {
       gsap.fromTo(grid.children,
         { opacity: 0, y: 24 },
         { opacity: 1, y: 0, duration: .5, stagger: .06, ease: 'power2.out', overwrite: true });
@@ -846,7 +851,7 @@
         return sum + p.est * qty;
       }, 0);
       $('#cartTotal').textContent = CLP.format(total);
-      lucide.createIcons();
+      if (window.lucide) lucide.createIcons();
     }
   }
 
@@ -922,14 +927,17 @@
 
   /* ---------- Eventos ---------- */
   document.addEventListener('DOMContentLoaded', () => {
-    lucide.createIcons();
+    if (window.lucide) lucide.createIcons();
     renderCatalog('todos');
     updateCartUI();
     $('#year').textContent = new Date().getFullYear();
 
     // Hero: asegurar reproducción (algunos navegadores bloquean el autoplay)
     const heroVideo = $('video.hero-bg');
-    if (heroVideo) {
+    if (heroVideo && prefersReduced) {
+      heroVideo.removeAttribute('autoplay');
+      heroVideo.pause();
+    } else if (heroVideo) {
       heroVideo.muted = true; // requerido por la política de autoplay
       const tryPlay = () => heroVideo.play().catch(() => {});
       tryPlay();
@@ -943,8 +951,9 @@
 
     // Tabs
     $$('.tab-btn').forEach(btn => btn.addEventListener('click', () => {
-      $$('.tab-btn').forEach(b => b.classList.remove('active'));
+      $$('.tab-btn').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-pressed', 'false'); });
       btn.classList.add('active');
+      btn.setAttribute('aria-pressed', 'true');
       renderCatalog(btn.dataset.filter);
     }));
 
@@ -994,7 +1003,7 @@
     window.addEventListener('scroll', onScroll);
 
     // Animaciones GSAP
-    if (window.gsap) {
+    if (window.gsap && !prefersReduced) {
       gsap.from('[data-hero]', { opacity: 0, y: 30, duration: .8, stagger: .12, ease: 'power3.out', delay: .1 });
       if (window.ScrollTrigger) {
         gsap.registerPlugin(ScrollTrigger);

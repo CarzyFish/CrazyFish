@@ -50,3 +50,15 @@ Abre `index.html` directamente en el navegador, o sirve la carpeta:
 python3 -m http.server 8080
 # luego abre http://localhost:8080
 ```
+
+## 🎨 Recompilar el CSS (Tailwind)
+
+El sitio ya **no** compila Tailwind en el navegador: sirve `assets/tailwind.css` precompilado.
+Si editas clases en `index.html`, regenera el CSS:
+
+```bash
+npm install                 # solo la primera vez
+npx tailwindcss -c tailwind.config.js -i src/input.css -o assets/tailwind.css --minify
+```
+
+`tailwind.config.js` contiene la paleta (navy/aqua/esmeralda), las fuentes y las animaciones.

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://carzyfish.github.io/CrazyFish/sitemap.xml
